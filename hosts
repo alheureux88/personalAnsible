@@ -1,0 +1,5 @@
+work.alheureux.com  ansible_host=192.168.2.3
+test.alheureux.com  ansible_host=192.168.1.32
+
+[infra]
+infra.alheureux.com ansible_host=192.168.2.11

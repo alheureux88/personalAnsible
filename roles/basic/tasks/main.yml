@@ -1,0 +1,36 @@
+- name: Add Fish repo apt-key
+  apt_key:
+    data: "{{ lookup('file', '{{ role_path }}/files/fish.key') }}"
+    state: present
+
+- name: Install Fish apt repositry
+  apt_repository:
+    repo: "deb http://download.opensuse.org/repositories/shells:/fish:/release:/2/Debian_9.0/ /"
+    state: present
+    filename: shells:fish:release:2.list
+
+- name: "Update and upgrade apt"
+  apt:
+    update_cache: true
+    upgrade: true
+
+- name: "Install basic packages"
+  apt:
+    name: "{{ item }}"
+    state: latest
+    update_cache: true
+  with_items:
+    - tree
+    - sudo
+    - curl
+    - tmux
+    - vim
+    - git
+    - stow
+    - fish
+    - nfs-common
+
+- name: "Set zsh as default shell"
+  user:
+    name: "{{ ansible_user }}"
+    shell: /usr/bin/fish
